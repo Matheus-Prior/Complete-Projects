@@ -1,0 +1,321 @@
+using System;
+using System.Runtime.Serialization;
+
+class Program
+{
+
+    static void Main()
+    {
+
+        //arrays!
+
+        //   int[] grade = { 80, 99, 75, 40 }; //literal assignment
+        //   int[] newGrades = new int[4]; //blank assignment
+
+        //  
+        //   Console.WriteLine(grade[1]); //prints out SECOND item in array
+
+
+        //  for(int i = 0; i < 4; i++)
+        //  {
+        //      Console.WriteLine(grade[i]); //prints all items in array in order
+
+        //  }
+
+        //  Console.WriteLine(grade[0] + " " + grade[1] + " " + grade[2] + " " + grade[3]);
+
+        //  inventory:
+
+        string[] inventory = { "Sword", "Shield", " ", " ", " ", " ", " ", " " };
+        int money = 20;
+
+        int key = 0;
+
+        while (key == 0)
+        {
+            
+
+            Console.WriteLine("Would you like to open the inventory or shop?");
+            Console.WriteLine("");
+
+            string choice = Console.ReadLine();
+
+            if (choice.Equals ("inventory", StringComparison.OrdinalIgnoreCase))
+            {
+                for (int i = 0; i < inventory.Length; i++)
+                {
+                    Console.WriteLine(inventory[i]);
+                }
+
+                Console.WriteLine("");
+                Console.WriteLine("Money: $" + money);
+                Console.WriteLine("");
+
+
+                Console.WriteLine("Do you wish to revome an item from inventory? (yes/no)");
+                Console.WriteLine("");
+
+                string option = Console.ReadLine();
+
+
+                if (option == "yes" || option == "Yes")
+                {
+                    Console.WriteLine("Type the item you wish to remove:");
+
+                    string choiceRemove = Console.ReadLine();
+
+                    if (choiceRemove == "sword" || choiceRemove == "Sword")
+                    {
+                        for (int i = 0; i < inventory.Length; i++)
+                        {
+                            string removed = inventory[i];
+
+                            if (removed == "Sword")
+                            {
+                                inventory[i] = " ";
+                            }
+                        }
+
+                        Console.WriteLine("You removed a Sword from your inventory!");
+                    }
+                    else if (choiceRemove == "shield" || choiceRemove == "Shield")
+                    {
+                        for (int i = 0; i < inventory.Length; i++)
+                        {
+                            string removed = inventory[i];
+
+                            if (removed == "Shield")
+                            {
+                                inventory[i] = " ";
+                            }
+                        }
+
+                        Console.WriteLine("You removed a Shield from your inventory!");
+                    }
+                    else if (choiceRemove == "potion" || choiceRemove == "Potion")
+                    {
+                        for (int i = 0; i < inventory.Length; i++)
+                        {
+                            string removed = inventory[i];
+
+                            if (removed == "Potion")
+                            {
+                                inventory[i] = " ";
+                            }
+                        }
+
+                        Console.WriteLine("You removed Potions from your inventory!");
+                    }
+                    else if (choiceRemove == "Hat" || choiceRemove == "hat")
+                    {
+                        for (int i = 0; i < inventory.Length; i++)
+                        {
+                            string removed = inventory[i];
+
+                            if (removed == "Hat")
+                            {
+                                inventory[i] = " ";
+                            }
+                        }
+
+                        Console.WriteLine("You removed Hats from your inventory!");
+                    }
+                    else if (choiceRemove == "Cheese" || choiceRemove == "cheese")
+                    {
+                        for (int i = 0; i < inventory.Length; i++)
+                        {
+                            string removed = inventory[i];
+
+                            if (removed == "Cheese")
+                            {
+                                inventory[i] = " ";
+                            }
+                        }
+
+                        Console.WriteLine("You removed a Cheese from your inventory!");
+                    }
+                    else if (choiceRemove == "Map" || choiceRemove == "map")
+                    {
+                        for (int i = 0; i < inventory.Length; i++)
+                        {
+                            string removed = inventory[i];
+
+                            if (removed == "Map")
+                            {
+                                inventory[i] = " ";
+                            }
+                        }
+
+                        Console.WriteLine("You removed the Maps from your inventory!");
+                    }
+
+
+                }
+
+                else
+                {
+                   
+                }
+
+            }
+
+            else if (choice == "shop" || choice == "Shop")
+            {
+                string[] shop = { "Potion", "Hat", "Cheese", "Map" };
+                int[] cost = { 5, 10, 15, 7 };
+
+                Console.WriteLine("");
+                Console.WriteLine("SHOP:");
+                Console.WriteLine("");
+
+                for (int i = 0; i < shop.Length; i++)
+                {
+                    Console.WriteLine(shop[i] + " - " + cost[i]);
+                }
+
+                Console.WriteLine("");
+                Console.WriteLine("Type the item you want to buy:");
+                Console.WriteLine("");
+
+                string buy = Console.ReadLine();
+
+                if (buy == "potion" || buy == "Potion")
+                {
+                    if (money < 5)
+                    {
+                        Console.WriteLine("You don't have enough funds to buy a potion!");
+                        Console.WriteLine("");
+
+                    }
+
+                    else if (money >= 5)
+                    {
+                        Console.WriteLine("You bought a potion!");
+                        Console.WriteLine("");
+                        money -= 5;
+
+                        for (int i = 0; i < inventory.Length; i++)
+                        {
+
+                            string accessedItem = inventory[i];
+                            if (accessedItem == " ")
+                            {
+                                inventory[i] = "Potion";
+
+                                break;
+                            }
+
+                        }
+
+                    }
+
+
+                }
+                if (buy == "hat" || buy == "Hat")
+                {
+                    if (money < 10)
+                    {
+                        Console.WriteLine("You don't have enough funds to buy a hat!");
+                        Console.WriteLine("");
+
+                    }
+
+                    else if (money >= 10)
+                    {
+                        Console.WriteLine("You bought a fancy hat!");
+                        Console.WriteLine("");
+                        money -= 10;
+
+                        for (int i = 0; i < inventory.Length; i++)
+                        {
+
+                            string accessedItem = inventory[i];
+                            if (accessedItem == " ")
+                            {
+                                inventory[i] = "Hat";
+
+                                break;
+                            }
+
+                        }
+
+                    }
+
+                }
+                if (buy == "Cheese" || buy == "cheese")
+                {
+                    if (money < 15)
+                    {
+                        Console.WriteLine("You don't have enough funds to buy a cheese!");
+                        Console.WriteLine("");
+
+                    }
+
+                    else if (money >= 15)
+                    {
+                        Console.WriteLine("You bought a big cheese!");
+                        Console.WriteLine("");
+                        money -= 15;
+
+                        for (int i = 0; i < inventory.Length; i++)
+                        {
+
+                            string accessedItem = inventory[i];
+                            if (accessedItem == " ")
+                            {
+                                inventory[i] = "Cheese";
+
+                                break;
+                            }
+
+                        }
+
+                    }
+
+                }
+                if (buy == "Map" || buy == "map")
+                {
+                    if (money < 7)
+                    {
+                        Console.WriteLine("You don't have enough funds to buy a map!");
+
+                    }
+
+                    else if (money >= 7)
+                    {
+                        Console.WriteLine("You bought a a map!");
+                        money -= 7;
+
+                        for (int i = 0; i < inventory.Length; i++)
+                        {
+
+                            string accessedItem = inventory[i];
+                            if (accessedItem == " ")
+                            {
+                                inventory[i] = "Map";
+
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("");
+                        Console.WriteLine("Incorrect input, try again.");
+                    }
+
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Incorrect input, try again.");
+                Console.WriteLine("");
+
+            }
+        }
+    }
+
+}
+
