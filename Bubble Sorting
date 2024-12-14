@@ -1,0 +1,54 @@
+using System;
+using System.Net.Http.Headers;
+using System.Diagnostics;
+
+class Program
+{
+    static void BubbleSort(ref int[] unsortedArray)
+    {
+        for (int j = 0; j < unsortedArray.Length; j++)
+        {
+            for (int i = 0; i < unsortedArray.Length - 1; i++)
+            {
+                if (unsortedArray[i] > unsortedArray[i + 1])
+                {
+                    int tempNum = unsortedArray[i];
+
+                    unsortedArray[i] = unsortedArray[i + 1];
+                    unsortedArray[i + 1] = tempNum;
+                }
+            }
+        }
+    }
+    static void Main(string[] args)
+    {
+        Stopwatch sw = new Stopwatch();
+        sw.Start();
+
+        int[] arrayToSort = new int[15];
+        Random rng = new Random();
+
+        Console.Write("Unsorted Array: ");
+
+        for (int i = 0; i < arrayToSort.Length; i++)
+        {
+            arrayToSort[i] = rng.Next(1,30);
+            Console.Write(arrayToSort[i] + " ");
+        }
+
+        //sorting time!
+
+        BubbleSort(ref arrayToSort);
+
+        Console.Write("\nSorted Array: ");
+        for (int i = 0;i < arrayToSort.Length; i++)
+        {
+            Console.Write(arrayToSort[i] + " ");
+        }
+
+        sw.Stop();
+
+        Console.WriteLine("\nTime to sort: " + sw);
+    }
+
+}
