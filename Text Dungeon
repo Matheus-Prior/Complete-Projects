@@ -1,0 +1,82 @@
+using System;
+
+class DungeonGame
+{
+
+    static void Main(string[] args)
+
+    {
+        Console.WriteLine("Welcome to the Dungeon of Many Secrets!");
+        Console.WriteLine("");
+        Console.WriteLine("What shall be thy name?");
+
+        string Name = Console.ReadLine();
+
+        Console.WriteLine("Ah, I see... " + Name + ". What a weird name.");
+        Console.WriteLine("");
+        Console.WriteLine("Very well then, " + Name + ". It appears you are in the Dungeon of Many Secrets.");
+        Console.WriteLine("");
+
+        DOMS();
+    }
+
+        static void DOMS()
+        {
+
+            Console.WriteLine("Which direction do you wish to move to first?");
+
+
+
+            Random rng = new Random();                     //random generator to randomize number of feet player falls while moving right.
+            int feet = rng.Next(10, 570000);
+            int gold = rng.Next(2, 15);
+
+
+
+            string Move = Console.ReadLine();
+
+            if (Move == "Left" || Move == "left" || Move == "East" || Move == "east")
+            {
+                Console.WriteLine("You moved left! You found a stray cat. Does it seem... Friendly?");
+                Console.WriteLine("");
+                Console.WriteLine("(You approach to touch the cat, it seemed to like your petting.)");
+            }
+
+
+            else if (Move == "Right" || Move == "right" || Move == "West" || Move == "west")
+            {
+                Console.WriteLine("You moved right! You fell into a " + feet + " ft hole. You are now dead.");
+                Console.WriteLine("");
+                Console.WriteLine("(Perhaps that wasn't the RIGHT choice... haha)");
+            }
+
+
+            else if (Move == "Up" || Move == "up" || Move == "North" || Move == "north")
+            {
+                Console.WriteLine("You moved up! You found the stairway to heaven, have a nice trip!");
+                Console.WriteLine("");
+                Console.WriteLine("(P.S. Cannot guarantee you will return in safety. The stairs seem very fragile and flimsy)");
+            }
+
+            else if (Move == "Down" || Move == "down" || Move == "South" || Move == "south")
+            {
+                Console.WriteLine("You moved down! You found gold! Exactly " + gold + " golden bars!");
+                Console.WriteLine("");
+                Console.WriteLine("I guess you're now rich! Time to find a way out... If there even is one...");
+            }
+
+            else
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Incorrect input! Please try again");
+                Console.WriteLine("");
+
+            DOMS();
+            }
+
+        }
+    }
+
+
+
+
