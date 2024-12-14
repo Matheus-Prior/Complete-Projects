@@ -1,0 +1,665 @@
+using System;
+using System.Runtime.CompilerServices;
+
+class Player
+{
+    public string Character;
+
+    public Player(string option) //characters overload constructor (used only to assist in callnig functions)
+    {
+        Character = option;
+    }
+
+    //player 1 and 2's actions/possible turns
+
+    public void Turn1A(Player opponent, string[] line1, string token) //calls the player, references the line where the turn takes place, and has a token string to identify what is being placed (X or O)
+    {
+        for (int i = 0; i < line1.Length; i++)
+        {
+
+            string accessedItem = line1[1];
+            if (accessedItem == "   ")
+            {
+                line1[1] = token; //places token (either player one's or player two's, depending on who called the function) on the grid 
+
+                break;
+            }
+            else
+            {
+                Console.WriteLine("That spot is already filled! You lost your turn haha"); //makes the player lose a turn if they place a marker somewhere that is filled haha because im evil >:)
+                                                                                           //P.S. I could have made it so the player tries again with a do loop before their turn, just like for the wrong input, but i was feeling kinda malecious today >:D
+                break; //break to return to the code (probably isnt needed, but better safe than sorry)
+            }
+        }
+    }
+    public void Turn2A(Player opponent, string[] line1, string token) //same logic from Turn1A follows through all turns below vvv
+    {
+        for (int i = 0; i < line1.Length; i++)
+        {
+
+            string accessedItem = line1[3];
+            if (accessedItem == "   ")
+            {
+                line1[3] = token;
+
+                break;
+            }
+            else
+            {
+                Console.WriteLine("That spot is already filled! You lost your turn haha");
+
+                break;
+            }
+        }
+    }
+    public void Turn3A(Player opponent, string[] line1, string token)
+    {
+        for (int i = 0; i < line1.Length; i++)
+        {
+
+            string accessedItem = line1[5];
+            if (accessedItem == "   ")
+            {
+                line1[5] = token;
+
+                break;
+            }
+            else
+            {
+                Console.WriteLine("That spot is already filled! You lost your turn haha");
+
+                break;
+            }
+        }
+    }
+    public void Turn1B(Player opponent, string[] line3, string token)
+    {
+        for (int i = 0; i < line3.Length; i++)
+        {
+
+            string accessedItem = line3[1];
+            if (accessedItem == "   ")
+            {
+                line3[1] = token;
+
+                break;
+            }
+            else
+            {
+                Console.WriteLine("That spot is already filled! You lost your turn haha");
+
+                break;
+            }
+        }
+    }
+    public void Turn2B(Player opponent, string[] line3, string token)
+    {
+        for (int i = 0; i < line3.Length; i++)
+        {
+
+            string accessedItem = line3[3];
+            if (accessedItem == "   ")
+            {
+                line3[3] = token;
+
+                break;
+            }
+            else
+            {
+                Console.WriteLine("That spot is already filled! You lost your turn haha");
+
+                break;
+            }
+        }
+    }
+    public void Turn3B(Player opponent, string[] line3, string token)
+    {
+        for (int i = 0; i < line3.Length; i++)
+        {
+
+            string accessedItem = line3[5];
+            if (accessedItem == "   ")
+            {
+                line3[5] = token;
+
+                break;
+            }
+            else
+            {
+                Console.WriteLine("That spot is already filled! You lost your turn haha");
+
+                break;
+            }
+        }
+    }
+    public void Turn1C(Player opponent, string[] line5, string token)
+    {
+        for (int i = 0; i < line5.Length; i++)
+        {
+
+            string accessedItem = line5[1];
+            if (accessedItem == "   ")
+            {
+                line5[1] = token;
+
+                break;
+            }
+            else
+            {
+                Console.WriteLine("That spot is already filled! You lost your turn haha");
+
+                break;
+            }
+        }
+    }
+    public void Turn2C(Player opponent, string[] line5, string token)
+    {
+        for (int i = 0; i < line5.Length; i++)
+        {
+
+            string accessedItem = line5[3];
+            if (accessedItem == "   ")
+            {
+                line5[3] = token;
+
+                break;
+            }
+            else
+            {
+                Console.WriteLine("That spot is already filled! You lost your turn haha");
+
+                break;
+            }
+        }
+    }
+    public void Turn3C(Player opponent, string[] line5, string token)
+    {
+        for (int i = 0; i < line5.Length; i++)
+        {
+
+            string accessedItem = line5[5];
+            if (accessedItem == "   ")
+            {
+                line5[5] = token;
+
+                break;
+            }
+            else
+            {
+                Console.WriteLine("That spot is already filled! You lost your turn haha");
+
+                break;
+            }
+        }
+    }
+
+
+    //check win conditions for both characters:
+
+ 
+    public void CheckWinLeft(Player opponent, string[] line1, ref bool run, out int index) //function to check win on the left column, returns an index to allow for tie checking
+    {
+        index = 0; //resets index to 0 when checking for a win everytime
+
+        for (int i = 0; i < line1.Length; i++)
+        {
+            if (line1[1] == " X " && line1[3] == " X " && line1[5] == " X ") //checks all 3 spaces in line1 for tokens
+            {
+                index = 1; //sets index to 1 if X wins
+            }
+            if (line1[1] == " O " && line1[3] == " O " && line1[5] == " O ")
+            {
+                index = 2; //sets it to 2 if O wins
+            }
+        }
+        if (index == 1) //processes new index value and outputs victory message, as well as stops the code.
+        {
+            Console.WriteLine("Player 1 Wins!");
+            Console.WriteLine(" ");
+
+            run = false; //stops the code
+        }
+        if (index == 2)
+        {
+            Console.WriteLine("Player 2 Wins!");
+            Console.WriteLine(" ");
+
+            run = false;
+        }
+    }
+    public void CheckWinCenter(Player opponent, string[] line3, ref bool run, out int index) //same logic from the top function. applied to the center and the right functions
+    {
+        index = 0;
+
+        for (int i = 0; i < line3.Length; i++)
+        {
+            if (line3[1] == " X " && line3[3] == " X " && line3[5] == " X ") //same thing but checks line 3
+            {
+                index = 1;
+            }
+            if (line3[1] == " O " && line3[3] == " O " && line3[5] == " O ")
+            {
+                index = 2;
+            }
+        }
+        if (index == 1)
+        {
+            Console.WriteLine("Player 1 Wins!");
+            Console.WriteLine(" ");
+
+            run = false;
+        }
+        if (index == 2)
+        {
+            Console.WriteLine("Player 2 Wins!");
+            Console.WriteLine(" ");
+
+            run = false;
+        }
+    }
+    public void CheckWinRight(Player opponent, string[] line5, ref bool run, out int index)
+    {
+        index = 0;
+
+        for (int i = 0; i < line5.Length; i++)
+        {
+            if (line5[1] == " X " && line5[3] == " X " && line5[5] == " X ") //again, same but line5
+            {
+                index = 1;
+            }
+            if (line5[1] == " O " && line5[3] == " O " && line5[5] == " O ")
+            {
+                index = 2;
+            }
+        }
+        if (index == 1)
+        {
+            
+            Console.WriteLine("Player 1 Wins!");
+            Console.WriteLine(" ");
+
+            run = false;
+        }
+        if (index == 2)
+        {
+            
+            Console.WriteLine("Player 2 Wins!");
+            Console.WriteLine(" ");
+
+            run = false;
+        }
+    }
+    public void CheckWinTop(Player opponent, string[] line1, string[] line3, string[] line5, ref bool run, out int index) //same logic from the above check wins, but checks all 3 arrays since its a horizontal win check
+    {
+        index = 0;
+
+        for (int i = 0; i < line1.Length; i++)
+        {
+            if (line1[1] == " X " && line3[1] == " X " && line5[1] == " X ") //checks all 3 line arrays in the first spot [1] for a token
+            {
+                index = 1; //same logic, updates the index value
+            }
+            if (line1[1] == " O " && line3[1] == " O " && line5[1] == " O ")
+            {
+                index = 2;
+            }
+        }
+        if (index == 1)
+        {
+            
+            Console.WriteLine("Player 1 Wins!");
+            Console.WriteLine(" ");
+
+            run = false;
+        }
+        if (index == 2)
+        {
+            
+            Console.WriteLine("Player 2 Wins!");
+            Console.WriteLine(" ");
+
+            run = false;
+        }
+    }
+    public void CheckWinMiddle(Player opponent, string[] line1, string[] line3, string[] line5, ref bool run, out int index) //same logic used in the top check, but changes the spot to [3]
+    {
+        index = 0;
+
+        for (int i = 0; i < line1.Length; i++)
+        {
+            if (line1[3] == " X " && line3[3] == " X " && line5[3] == " X ")
+            {
+                index = 1;
+            }
+            if (line1[3] == " O " && line3[3] == " O " && line5[3] == " O ")
+            {
+                index = 2;
+            }
+        }
+        if (index == 1)
+        {
+           
+            Console.WriteLine("Player 1 Wins!");
+            Console.WriteLine(" ");
+
+            run = false;
+        }
+        if (index == 2)
+        {
+      
+            Console.WriteLine("Player 2 Wins!");
+            Console.WriteLine(" ");
+
+            run = false;
+        }
+    }
+    public void CheckWinBottom(Player opponent, string[] line1, string[] line3, string[] line5, ref bool run, out int index) //same logic from the 2 above, but checks spot [5]
+    {
+        index = 0;
+
+        for (int i = 0; i < line1.Length; i++)
+        {
+            if (line1[5] == " X " && line3[5] == " X " && line5[5] == " X ")
+            {
+                index = 1;
+            }
+            if (line1[5] == " O " && line3[5] == " O " && line5[5] == " O ")
+            {
+                index = 2;
+            }
+        }
+        if (index == 1)
+        {
+            
+            Console.WriteLine("Player 1 Wins!");
+            Console.WriteLine(" ");
+
+            run = false;
+        }
+        if (index == 2)
+        {
+            
+            Console.WriteLine("Player 2 Wins!");
+            Console.WriteLine(" ");
+
+            run = false;
+        }
+    }
+    public void CheckWinDiag1(Player opponent, string[] line1, string[] line3, string[] line5, ref bool run, out int index) //again, pretty much the same from the horizontal win checks, but checks all 3 arrays and all 3 different diagonal spots for a win
+    {
+        index = 0;
+
+        for (int i = 0; i < line1.Length; i++)
+        {
+            if (line1[1] == " X " && line3[3] == " X " && line5[5] == " X ") //checks line 1 spot 1, line 3 spot 3 and line 5 spot 5
+            {
+                index = 1;
+            }
+            if (line1[1] == " O " && line3[3] == " O " && line5[5] == " O ")
+            {
+                index = 2;
+            }
+        }
+        if (index == 1)
+        {
+            Console.WriteLine("Player 1 Wins!");
+            Console.WriteLine(" ");
+
+            run = false;
+        }
+        if (index == 2)
+        {
+            Console.WriteLine("Player 2 Wins!");
+            Console.WriteLine(" ");
+
+            run = false;
+        }
+    }
+    public void CheckWinDiag2(Player opponent, string[] line1, string[] line3, string[] line5, ref bool run, out int index) //same thing as the first diagonal one, but checks for a diagonal the other way
+    {
+        index = 0;
+
+        for (int i = 0; i < line1.Length; i++)
+        {
+            if (line1[5] == " X " && line3[3] == " X " && line5[1] == " X ") //line 1 spot 5, line 3 spot 3 and line 5 spot 1
+            {
+                index = 1;
+            }
+            if (line1[5] == " O " && line3[3] == " O " && line5[1] == " O ")
+            {
+                index = 2;
+            }
+        }
+        if (index == 1)
+        {
+            Console.WriteLine("Player 1 Wins!");
+            Console.WriteLine(" ");
+
+            run = false;
+        }
+        if (index == 2)
+        {
+            Console.WriteLine("Player 2 Wins!");
+            Console.WriteLine(" ");
+
+            run = false;
+        }
+    }
+    public void CheckTie(Player opponent, string[] line1, string[] line3, string[] line5, ref bool run, ref int index) //checks for a tie. it is ran after all win conditions are checked and receives the index input from the wins. if it is not 0, someone must have won, however, if it is 0 and meets the other conditions, it ties.
+    {
+        int tie = 0; //similar to the index variable, probably is not needed but I made it so it was safer to not run into undesired bugs
+
+        for (int i = 0;i < line1.Length;i++)
+        {
+            if (index == 0 && line1[1] != "   " && line1[3] != "   " && line1[5] != "   " && line3[1] != "   " && line3[3] != "   " && line3[5] != "   " && line5[1] != "   " && line5[3] != "   " && line5[5] != "   ") //this long line checks if all spaces are not "   ", and also checks if the index int is equal to 0. If everything is met, it ties.
+            {
+                tie = 1;
+            }
+        }
+
+        if (tie == 1) //checks if a tie happened and prints out tie message and stops the code
+        {
+            Console.WriteLine("Its a Tie! No one wins.");
+            Console.WriteLine("");
+
+            run = false;
+        }
+    }
+}
+
+
+
+class Program //class for the main program
+{
+    public static void Grid(string[] reference, string[] line1, string[] line2, string[] line3, string[] line4, string[] line5) //grid function. sets up the grid every time and keeps track of tokens placed in it.
+    {
+
+        for (int i = 0; i < reference.Length; i++)
+        {
+            Console.WriteLine(reference[i] + line1[i] + line2[i] + line3[i] + line4[i] + line5[i]); //prints the grid
+        }
+
+    }
+
+    static public void Main(string[] args) //main function, starts the code and sets everything up.
+    {
+        Console.WriteLine("Welcome to Tic Tac Toe!"); //intro to the code
+        Console.WriteLine("Player 1 will be: X");
+        Console.WriteLine("Player 2 will be: O");
+        Console.WriteLine("");
+
+        string X = " X "; //creates a string for both players
+        string O = " O ";
+
+        Console.WriteLine("Begin!");
+        Console.WriteLine("");
+
+        Game(X, O); //calls the game function 
+    }
+    static public void Game(string X, string O) //game function! runs the game 
+    {
+        Player Player1 = new Player(X); //player characters are created to keep track of who is who
+        Player Player2 = new Player(O);
+
+        bool run = true; //run bool to keep the game loop running and end it when needed
+
+        string[] reference = { "   ", " 1 ", "   ", " 2 ", "   ", " 3 " };
+        string[] line1 = { " A ", "   ", "---", "   ", "---", "   " };
+        string[] line2 = { " ", " | ", "-|-", " | ", "-|-", " | ", };
+        string[] line3 = { "   B ", "   ", "---", "   ", "---", "   " };
+        string[] line4 = { " ", " | ", "-|-", " | ", "-|-", " | ", };
+        string[] line5 = { "   C ", "   ", "---", "   ", "---", "   " }; //weird lookin grid lol (looks pretty in console tho)
+
+        Grid(reference, line1, line2, line3, line4, line5);  //calls the grid funciton which prints it 
+
+        int index = 0; //sets up the index which is later used to check for wins and ties.
+
+        while (run) //while loop to run the code
+        {
+            string choice; //creates a choice string to make it so the player can choose where to place the token
+
+            do //do loop to check for incorrect inputs. keeps repeating until a correct one has been typed.
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Player 1's turn! Where do you want to place an X? (ex. 1A [NumberLetter])");
+                Console.WriteLine("");
+
+                choice = Console.ReadLine();
+
+                if (choice.ToLower() != "1a" && choice.ToLower() != "1b" && choice.ToLower() != "1c" && choice.ToLower() != "2a" && choice.ToLower() != "2b" && choice.ToLower() != "2c" && choice.ToLower() != "3a" && choice.ToLower() != "3b" && choice.ToLower() != "3c")
+                {
+                    Console.WriteLine("Wrong input! Please try again! (ex. 1A [NumberLetter])");
+                    Console.WriteLine("");
+                }
+            }
+            while (choice.ToLower() != "1a" && choice.ToLower() != "1b" && choice.ToLower() != "1c" && choice.ToLower() != "2a" && choice.ToLower() != "2b" && choice.ToLower() != "2c" && choice.ToLower() != "3a" && choice.ToLower() != "3b" && choice.ToLower() != "3c");
+
+            if (choice.ToLower() == "1a") //below are all the possible turn choices the player has. (not the brightest way to do it, i know i know, but its what my dookie brain could come up with
+            {
+                Player1.Turn1A(Player2, line1, " X ");
+            }
+            else if (choice.ToLower() == "2a")
+            {
+                Player1.Turn2A(Player2, line1, " X ");
+            }
+            else if (choice.ToLower() == "3a")
+            {
+                Player1.Turn3A(Player2, line1, " X ");
+            }
+            else if (choice.ToLower() == "1b")
+            {
+                Player1.Turn1B(Player2, line3, " X ");
+            }
+            else if (choice.ToLower() == "2b")
+            {
+                Player1.Turn2B(Player2, line3, " X ");
+            }
+            else if (choice.ToLower() == "3b")
+            {
+                Player1.Turn3B(Player2, line3, " X ");
+            }
+            else if (choice.ToLower() == "1c")
+            {
+                Player1.Turn1C(Player2, line5, " X ");
+            }
+            else if (choice.ToLower() == "2c")
+            {
+                Player1.Turn2C(Player2, line5, " X ");
+            }
+            else if (choice.ToLower() == "3c")
+            {
+                Player1.Turn3C(Player2, line5, " X ");
+            }
+
+            Console.WriteLine(""); //after player chooses where to place a token, all win conditions checks and tie check are run
+
+            Player1.CheckWinLeft(Player2, line1, ref run, out index);
+            Player1.CheckWinCenter(Player2, line3, ref run, out index);
+            Player1.CheckWinRight(Player2, line5, ref run, out index);
+            Player1.CheckWinTop(Player2, line1, line3, line5, ref run, out index);
+            Player1.CheckWinMiddle(Player2, line1, line3, line5, ref run, out index);
+            Player1.CheckWinBottom(Player2, line1, line3, line5, ref run, out index);
+            Player1.CheckWinDiag1(Player2, line1, line3, line5, ref run, out index);
+            Player1.CheckWinDiag2(Player2, line1, line3, line5, ref run, out index);
+            Player1.CheckTie(Player2, line1, line3, line5, ref run, ref index);
+
+            Grid(reference, line1, line2, line3, line4, line5); //prints the grid to show the result after the turn 
+
+            string choice2; //another choice string but this time for player 2
+
+            if (run == true)
+            {
+
+                do //same logic as player 1's checks for incorrect inputs
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine("Now it's Player 2's turn, where do you want to place an O? (ex. 1A [NumberLetter])");
+                    Console.WriteLine("");
+
+                    choice2 = Console.ReadLine();
+
+                    if (choice2.ToLower() != "1a" && choice2.ToLower() != "1b" && choice2.ToLower() != "1c" && choice2.ToLower() != "2a" && choice2.ToLower() != "2b" && choice2.ToLower() != "2c" && choice2.ToLower() != "3a" && choice2.ToLower() != "3b" && choice2.ToLower() != "3c")
+                    {
+                        Console.WriteLine("Wrong input! Please try again! (ex. 1A [NumberLetter])");
+                        Console.WriteLine("");
+                    }
+                }
+                while (choice2.ToLower() != "1a" && choice2.ToLower() != "1b" && choice2.ToLower() != "1c" && choice2.ToLower() != "2a" && choice2.ToLower() != "2b" && choice2.ToLower() != "2c" && choice2.ToLower() != "3a" && choice2.ToLower() != "3b" && choice2.ToLower() != "3c");
+
+                if (choice2.ToLower() == "1a") //all possible player 2 options
+                {
+                    Player2.Turn1A(Player1, line1, " O ");
+                }
+                else if (choice2.ToLower() == "2a")
+                {
+                    Player2.Turn2A(Player1, line1, " O ");
+                }
+                else if (choice2.ToLower() == "3a")
+                {
+                    Player2.Turn3A(Player1, line1, " O ");
+                }
+                else if (choice2.ToLower() == "1b")
+                {
+                    Player2.Turn1B(Player1, line3, " O ");
+                }
+                else if (choice2.ToLower() == "2b")
+                {
+                    Player2.Turn2B(Player1, line3, " O ");
+                }
+                else if (choice2.ToLower() == "3b")
+                {
+                    Player2.Turn3B(Player1, line3, " O ");
+                }
+                else if (choice2.ToLower() == "1c")
+                {
+                    Player2.Turn1C(Player1, line5, " O ");
+                }
+                else if (choice2.ToLower() == "2c")
+                {
+                    Player2.Turn2C(Player1, line5, " O ");
+                }
+                else if (choice2.ToLower() == "3c")
+                {
+                    Player2.Turn3C(Player1, line5, " O ");
+                }
+
+                Console.WriteLine("");
+
+                Grid(reference, line1, line2, line3, line4, line5); //prints the grid again
+
+                Player2.CheckWinLeft(Player1, line1, ref run, out index); //checks wins and tie, and in case nothing happens, restarts the game loop. 
+                Player2.CheckWinCenter(Player1, line3, ref run, out index);
+                Player2.CheckWinRight(Player1, line5, ref run, out index);
+                Player2.CheckWinTop(Player1, line1, line3, line5, ref run, out index);
+                Player2.CheckWinMiddle(Player1, line1, line3, line5, ref run, out index);
+                Player2.CheckWinBottom(Player1, line1, line3, line5, ref run, out index);
+                Player2.CheckWinDiag1(Player1, line1, line3, line5, ref run, out index);
+                Player2.CheckWinDiag2(Player1, line1, line3, line5, ref run, out index);
+                Player1.CheckTie(Player2, line1, line3, line5, ref run, ref index);
+            }
+
+        }
+
+    }
+
+} 
