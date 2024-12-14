@@ -1,0 +1,52 @@
+using System;
+
+class Program
+{
+
+    static void Main()
+    {
+
+        Console.WriteLine("Pokémon Sheet Creator");
+        Console.WriteLine("What is your Pokémon's name?");
+        
+        string pokename = Console.ReadLine();
+
+        Console.WriteLine("What is your Pokémon's type?");
+
+        string[] poketype = { "Electric", "Fire", "Grass", "Water", "Ghost", "Fighting", "Psychic", "Flynig", "Poison", "Dark", "Fairy", "Normal", "Steel" };
+
+
+        Console.WriteLine("");
+
+        Console.WriteLine("Pokémon Sheet");
+
+        Console.WriteLine("");
+
+        Console.WriteLine("Pokémon Name: " + pokename);
+        Console.WriteLine("Pokémon Type: " + poketype);
+
+        Console.WriteLine("");
+
+
+
+        Random rng = new Random ();
+
+        int CP = rng.Next(500,3500);
+        Console.WriteLine("CP: " + CP);
+
+        int HP = rng.Next(50,200);
+        Console.WriteLine("HP: " + HP + "/200");
+
+        int ATT = rng.Next(50, 200);
+        Console.WriteLine("Attack: " + ATT + "/200");
+
+        int DEF = rng.Next(50, 200);
+        Console.WriteLine("Defense: " + DEF + "/200");
+
+             
+    }
+
+
+}
+
+
