@@ -1,0 +1,214 @@
+using System;
+using System.Net.NetworkInformation;
+using System.Runtime.ConstrainedExecution;
+
+class Player //player class
+{
+    public string Name;
+    public int HP;
+    public int ATK;
+    public int DEF;
+
+    public Player(string p_name) //player overload constructor
+    {
+
+        Random rng = new Random(); //random object to randomize stats
+        int randomHp = rng.Next(100, 150);
+        int randomAtk = rng.Next(20, 50);
+        int randomDef = rng.Next(10, 30);
+
+        Name = p_name;
+        HP = randomHp;
+        ATK = randomAtk;
+        DEF = randomDef;
+    }
+
+    public void Attack(Player opponent) //attack function for both players
+    {
+        Console.WriteLine("");
+        Console.WriteLine(Name + " did " + ATK + " damage to " + opponent.Name + "!");
+        Console.WriteLine("");
+        opponent.HP -= ATK;
+    }
+    public void Defend(Player opponent) //defend function for both players
+    {
+        Console.WriteLine("");
+        Console.WriteLine(Name + " defended! They gained + " + DEF + " added to their HP!");
+        Console.WriteLine("");
+        HP += DEF;
+    }
+
+    public void Forfeit(Player opponent) //forfeit or resign function
+    {
+        Console.WriteLine("");
+        Console.WriteLine(Name + " forfeited the match!");
+        Console.WriteLine("");
+
+        Console.WriteLine("Final HP:");
+        Console.WriteLine(Name + "'s HP: " + HP);
+        Console.WriteLine(opponent.Name + "'s HP: " + opponent.HP);
+
+        Console.WriteLine("");
+        Console.WriteLine(opponent.Name + " won the fight!");
+
+    }
+}
+
+class Program
+{
+    static public void Main(string[] args) //intro to program, receives character names
+    {
+        Console.WriteLine("Welcome to the most EPIC character duel!");
+        Console.WriteLine("");
+        Console.WriteLine("What is Player 1's name?");
+        Console.WriteLine("");
+
+        string p_name = Console.ReadLine();
+
+        Console.WriteLine("");
+        Console.WriteLine("Hello, " + p_name + "!");
+        Console.WriteLine("");
+        Console.WriteLine("What is Player 2's name?");
+        Console.WriteLine("");
+
+        string p2_name = Console.ReadLine();
+
+        Console.WriteLine("");
+        Console.WriteLine("Hello, " + p2_name + "!");
+        Console.WriteLine("");
+
+        Console.WriteLine("You two will now fight to the death! Good luck :D");
+        Console.WriteLine("");
+
+        Console.WriteLine("========== FIGHT ==========");
+        Console.WriteLine("");
+
+        Fight(p_name, p2_name); //starts fight sequence
+
+    }
+    public static void Fight(string p_name, string p2_name) //fight sequence
+    {
+        bool run = true; //bool for loop to run until fight is over
+
+        //both player objects: 
+
+        Player Player1 = new Player(p_name);
+        Player Player2 = new Player(p2_name);
+
+        while (run) //while loop for program to run :)
+
+        {
+            Console.WriteLine("======= Player Stats ======"); //displays player's stats at the beginning of the turn
+            Console.WriteLine("");
+
+            Console.WriteLine(Player1.Name + "'s HP: " + Player1.HP + " | ATK: " + Player1.ATK + " | DEF: " + Player1.DEF); 
+            Console.WriteLine(Player2.Name + "'s HP: " + Player2.HP + " | ATK: " + Player2.ATK + " | DEF: " + Player2.DEF);
+            Console.WriteLine("");
+
+            string choice; //string for player 1's choice
+
+            do //do loop for it to loop until a correct input has been typed
+            {
+                Console.WriteLine("What will " + Player1.Name + " do? (Attack/Defend/Forfeit)");
+                Console.WriteLine("");
+                choice = Console.ReadLine();
+
+                if (choice.ToLower() != "attack" && choice.ToLower() != "atk" && choice.ToLower() != "defend" && choice.ToLower() != "def" && choice.ToLower() != "forfeit")
+                {
+                    Console.WriteLine("Wrong input! Please try again! (Attack, ATK, Defend, DEF or Forfeit)");
+                    Console.WriteLine("");
+                }
+
+            }
+            while (choice.ToLower() != "attack" && choice.ToLower() != "atk" && choice.ToLower() != "defend" && choice.ToLower() != "def" && choice.ToLower() != "forfeit");
+
+            //processes the valid input
+
+            if (choice.ToLower() == "attack" || choice.ToLower() == "atk")
+            {
+                Player1.Attack(Player2); //player 1's attack mechanic starts
+            }
+            else if (choice.ToLower() == "defend" || choice.ToLower() == "def")
+            {
+                Player1.Defend(Player2); //player 2's attack mechanic starts
+            }
+            else if (choice.ToLower() == "forfeit")
+            {
+                Player1.Forfeit(Player2); //forfeit mechanic for player 1
+                run = false; //chanegs the bool run to false to end the program
+                break; //shuts off the loop to guarantee program stoppage
+            }
+
+            Console.WriteLine(Player2.Name + "'s HP: " + Player2.HP); //displays player 2's hp after player 1's attack
+            Console.WriteLine("");
+
+            if (Player2.HP <= 0) //check if player 1 won
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Final HP:");
+                Console.WriteLine(Player1.Name + "'s HP: " + Player1.HP);
+                Console.WriteLine(Player2.Name + "'s HP: " + Player2.HP);
+
+                Console.WriteLine("");
+                Console.WriteLine(Player1.Name + " won the fight!");
+                run = false;
+                break;
+            }
+
+
+            //in case not:
+            //player 2's turn
+
+            string p2Choice; //string for player 2's choice
+
+            do //do loop for player 2's inputs (check if its valid or not)
+            {
+                Console.WriteLine("What will " + Player2.Name + " do? (Attack/Defend/Forfeit)");
+                Console.WriteLine("");
+                p2Choice = Console.ReadLine();
+
+                if (p2Choice.ToLower() != "attack" && p2Choice.ToLower() != "atk" && p2Choice.ToLower() != "defend" && p2Choice.ToLower() != "def" && p2Choice.ToLower() != "forfeit")
+                {
+                    Console.WriteLine("Wrong input! Please try again! (Attack, ATK or Defend, DEF)");
+                    Console.WriteLine("");
+                }
+
+            } while (p2Choice.ToLower() != "attack" && p2Choice.ToLower() != "atk" && p2Choice.ToLower() != "defend" && p2Choice.ToLower() != "def" && p2Choice.ToLower() != "forfeit");
+
+            if (p2Choice.ToLower() == "attack" || p2Choice.ToLower() == "atk")
+            {
+                Player2.Attack(Player1); //player 2's attack mechanic starts
+            }
+            else if (p2Choice.ToLower() == "defend" || p2Choice.ToLower() == "def")
+            {
+                Player2.Defend(Player1); //player 2's defend mechanic starts
+            }
+            else if (p2Choice.ToLower() == "forfeit")
+            {
+                Player2.Forfeit(Player1); //forfeit mechanic for player 2
+                run = false;
+                break;
+            }
+
+     
+            if (Player1.HP <= 0) //check for player 2 win
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Final HP:");
+                Console.WriteLine(Player1.Name + "'s HP: " + Player1.HP);
+                Console.WriteLine(Player2.Name + "'s HP: " + Player2.HP);
+
+                Console.WriteLine("");
+                Console.WriteLine(Player2.Name + " won the fight!");
+                run = false;
+                break;
+            }
+            
+
+            // no need for an else, as if both win checks are false, the fight will continue
+
+        }
+    }
+
+   
+}
