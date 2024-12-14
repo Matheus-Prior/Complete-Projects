@@ -1,0 +1,50 @@
+using System;
+using System.IO;
+using System.Reflection.PortableExecutable;
+
+class Program
+{
+    static Dictionary<string, int> wordCounter = new Dictionary<string, int>(); //creates a dictionary which I called wordCounter, the string is a word from the file and the int is how many times it appears.
+    public static void CharCheck(char c, ref string currentWord) //processes each character in the file
+    {
+        if (char.IsLetterOrDigit(c)) //if the character is a letter or digit, it is converted to lowercase in the currentWord string
+        {
+            currentWord += char.ToLower(c);
+        }
+        else if (!string.IsNullOrEmpty(currentWord)) //if it is not a letter or digit, it calls it the end of the word, and checks if the string currentWord is not empty
+        {
+            if (wordCounter.ContainsKey(currentWord))
+            {
+                wordCounter[currentWord]++; //if a word already exists in the dictionary, it increases its counter by 1
+            }
+                
+            else
+            {
+                wordCounter[currentWord] = 1; //if a word doesnt exist, it will add it to the dictionary and set its counter to 1
+            }
+
+            currentWord = ""; //resets the current word string to check for the next word
+        }
+    }
+    static void Main(string[] args)
+    {
+        string currentWord = ""; //starts the currentWord string
+
+        StreamReader reader = new StreamReader("baljunaCovenant.txt"); //creates the StreamReader to open and read the txt file
+
+        while (reader.Peek() >= 0) //reads the file one character at a time
+        {
+            char c = (char)reader.Read(); //converts whatever it read to a char, avoiding problems. 
+
+            CharCheck(c, ref currentWord); //calls out the CharCheck function to build the words.
+        }
+
+        Console.WriteLine("Word Count:"); //displays a title text
+        foreach (KeyValuePair <string,int> word in wordCounter) //foreach loop to print out each word 
+        {
+            Console.WriteLine(word.Key + ": " + word.Value); //writes out the word (word.key) and the amount of times it appears (word.Value)
+        }
+    }
+
+}
+
