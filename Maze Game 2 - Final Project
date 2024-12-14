@@ -1,0 +1,391 @@
+using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Runtime.InteropServices;
+
+class Player //player class used for the fighting function
+{
+    public string Name;
+    public int HP;
+    public int ATK;
+    public int DEF;
+
+    public Player(string p_name) //player overload constructor
+    {
+
+        Random rng = new Random(); //random object to randomize stats
+        int randomHp = rng.Next(100, 150);
+        int randomAtk = rng.Next(20, 50);
+        int randomDef = rng.Next(10, 20);
+
+        Name = p_name;
+        HP = randomHp;
+        ATK = randomAtk;
+        DEF = randomDef;
+    }
+
+    public void Attack(Player opponent) //attack function for the player and the enemy
+    {
+        Console.WriteLine("");
+        Console.WriteLine(Name + " did " + ATK + " damage to " + opponent.Name + "!");
+        Console.WriteLine("");
+        opponent.HP -= ATK;
+    }
+    public void Defend(Player opponent) //defend function for the player and the enemy
+    {
+        Console.WriteLine("");
+        Console.WriteLine(Name + " defended! They gained + " + DEF + " added to their HP!");
+        Console.WriteLine("");
+        HP += DEF;
+    }
+
+    public void Forfeit(Player opponent) //forfeit or resign function in case the player gives up
+    {
+        Console.WriteLine("");
+        Console.WriteLine(Name + " forfeited the match!");
+        Console.WriteLine("");
+
+        Console.WriteLine("Final HP:");
+        Console.WriteLine(Name + "'s HP: " + HP);
+        Console.WriteLine(opponent.Name + "'s HP: " + opponent.HP);
+
+        Console.WriteLine("");
+        Console.WriteLine(opponent.Name + " won the fight!");
+
+    }
+
+}
+class Program
+{
+
+    static void Main(string[] args)
+    {
+        //2-dimensional array which displays the maze
+        char[,] maze =
+            {
+            {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
+            {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#' },
+            {'#', ' ', ' ', ' ', '#', '#', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#' },
+            {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', '#', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', '#', ' ', '#', ' ', '#' },
+            {'#', ' ', '#', '#', '#', ' ', '#', ' ', ' ', ' ', '#', ' ', '#', ' ', '#', '#', ' ', '#', '#', '#', ' ', ' ', ' ', '#', ' ', '#' },
+            {'#', ' ', ' ', ' ', ' ', ' ', '#', ' ', '#', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', ' ', '#', '#', '#', '#', '#', ' ', '#' },
+            {'#', '#', '#', '#', ' ', '#', '#', ' ', '#', ' ', '#', '#', '#', '#', ' ', '#', ' ', '0', ' ', '#', ' ', ' ', ' ', '#', ' ', '#' },
+            {'#', ' ', ' ', ' ', ' ', ' ', '#', ' ', '#', ' ', ' ', ' ', ' ', '#', ' ', '#', ' ', ' ', ' ', '#', ' ', '#', ' ', ' ', ' ', '#' },
+            {'#', ' ', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', ' ', '#', '#', '#', '#', '#', '#', '#', '#', '#', ' ', '#' },
+            {'#', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#' },
+            {'#', '=', '=', '#', 'H', '#', '=', '=', '=', '=', '=', '=', '=', '=', '=', '=', '=', '=', '=', '=', '#', 'H', '#', '=', '=', '#' },
+            {'#', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#' },
+            {'#', ' ', '#', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', '#', '#', ' ', '#', '#', ' ', '#', ' ', '#', '#', ' ', '#' },
+            {'#', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', '#', ' ', '#', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', '#', ' ', '#', ' ', ' ', '#' },
+            {'#', '#', '#', '#', '#', '#', ' ', '#', ' ', '#', ' ', '#', '#', '#', '#', '#', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', '#' },
+            {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', ' ', '#' },
+            {'#', ' ', '#', '#', '#', ' ', '#', '#', '#', '#', ' ', 'F', ' ', '#', ' ', '#', ' ', '#', '#', '#', '#', '#', '#', '#', ' ', '#' },
+            {'#', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#' },
+            {'#', ' ', '#', ' ', '#', '#', '#', ' ', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', ' ', '#', ' ', '0', ' ', '#' },
+            {'#', ' ', '#', ' ', '#', ' ', ' ', ' ', '#', 'O', '#', ' ', 'Z', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#' },
+            {'#', ' ', '#', '#', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', ' ', '#' },
+            {'#', ' ', ' ', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', '#' },
+            {'#', ' ', '0', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '[', ']', ' ', '#', ' ', '#', '#', '#', ' ', '#', ' ', '#', ' ', '#' },
+            {'#', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#' },
+            {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
+        };
+
+        //ints for player's position on the map
+        int PlayerX = 2; //2 is where the player "X" starts
+        int PlayerY = 2;
+
+        //variables that control the inventory
+        int money = 0; //keeps track of player's money (coins)
+        bool hasKey = false; //bool to check if the player has the key (default is false)
+        string inventory = "[Nothing]";  //inventory string to display the player inventory on the screen (default is set to [Nothing]
+
+        //variable int to keep track if the game should be running
+        int mazeRun = 1;
+
+        //while loop to keep the game running
+        while (mazeRun == 1)
+        {
+
+            Console.SetCursorPosition(0, 0); //clears console (thanks kyle "setcursorposition fan" :D)
+
+            Console.WriteLine("R = Restart"); //lets the player know they can restart the game if they want to
+            Console.WriteLine("Coins: " + money); //displays the players wealth
+            Console.WriteLine("Inventory: " + inventory); //displays player inventory (can only hold 1 key, thats why its a string, no need for an array.)
+            Console.WriteLine("");
+
+            for (int y = 0; y < maze.GetLength(0); y++) //generates the Y part of the maze (also thanks to kyle for the help on this hehe)
+            {
+                for (int x = 0; x < maze.GetLength(1); x++) //generates the X part (horizontal) for each vertical line
+                {
+                    if (y == PlayerY && x == PlayerX) //player spawner
+                    {
+                        Console.ForegroundColor = ConsoleColor.Cyan; //changes the player's color to red
+                        Console.Write("X "); //player is X :D
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.White; //sets the barrier colors to white before coloring the coins and key
+                        if (maze[y, x] == '0')
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkYellow; //colors the coins yellow
+                        }
+                        if (maze[y, x] == 'F')
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green; //colors the key green
+                        }
+                        if (maze[y, x] == 'Z')
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red; //colors the enemy red
+                        }
+                        if (maze[y, x] == '=')
+                        {
+                            Console.ForegroundColor = ConsoleColor.Blue; //colors the river blue
+                        }
+                        if (maze[y, x] == 'H')
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkYellow; //colors the bridge dark yellow
+                        }
+                        if (maze[y, x] == 'O')
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkMagenta; //colors the portal dark pink
+                        }
+                        
+                        Console.Write(maze[y, x] + " ");
+                    }
+                }
+
+                Console.WriteLine();
+            }
+
+            //keyboard inputs, used the same coding from the Keyboard Input assignment, just changed the ifs to check for #, and never allow the player to walk on one.
+            ConsoleKeyInfo keyInfo = Console.ReadKey();
+            switch (keyInfo.Key)
+            {
+                case ConsoleKey.RightArrow:
+                    //player goes right
+                    if (PlayerX + 1 < maze.GetLength(1) && maze[PlayerY, PlayerX + 1] != '#' && maze[PlayerY, PlayerX + 1] != '=') //theres a +1 there to always check the space next to the player, and if its not a #, it will move.
+                    {
+                        PlayerX++; //adds 1 to PlayerX
+                    }
+                    break;
+
+                case ConsoleKey.LeftArrow:
+                    //player goes left
+                    if (PlayerX - 1 >= 0 && maze[PlayerY, PlayerX - 1] != '#' && maze[PlayerY, PlayerX - 1] != '=') //same logic from the right movement, but the other way. Doesnt check for the maze's end, but instead the beginning (0)
+                    {
+                        PlayerX--;
+                    }
+                    break;
+                case ConsoleKey.UpArrow:
+                    //player goes up
+                    if (PlayerY - 1 >= 0 && maze[PlayerY - 1, PlayerX] != '#' && maze[PlayerY, PlayerX - 1] != '=') //= is the river, and it adds the river feature
+                    {
+                        PlayerY--;
+                    }
+                    break;
+                case ConsoleKey.DownArrow:
+                    //player goes down
+                    if (PlayerY + 1 < maze.GetLength(0) && maze[PlayerY + 1, PlayerX] != '#' && maze[PlayerY, PlayerX + 1] != '=')
+                    {
+                        PlayerY++;
+                    }
+                    break;
+                case ConsoleKey.R: 
+                    //R to restart the game
+                    Console.Clear();
+                    Main(args);
+                    break;
+
+
+            }
+            if (maze[PlayerY, PlayerX] == 'F') //key funcionality:
+            {
+                inventory = "Key       "; //adds the key to the inventory string and displays it visually. 
+                hasKey = true; //sets the hasKey bool to true to check for win
+                maze[PlayerY, PlayerX] = ' '; //deletes the key after the player picked it up
+            }
+
+            if (maze[PlayerY, PlayerX] == '0') //coin funcionality:
+            {
+                money++; //adds 1 to the money when a coin is picked up
+                maze[PlayerY, PlayerX] = ' '; //deletes the coin after player picks it up
+            }
+            if (maze[PlayerY, PlayerX] == 'Z') //zekronix functionality (enemy)
+            {
+                Main2(ref mazeRun);
+                maze[PlayerY, PlayerX] = ' '; //deletes the enemy after fight
+                Console.Clear();
+            }
+            if (maze[PlayerY, PlayerX] == 'O') //portal functionality, teleports the player to x = 18 and y = 21
+            {
+                PlayerX = 18;
+                PlayerY = 21;
+            }
+
+            //win checking
+            if (money >= 3 && hasKey == true && (maze[PlayerY, PlayerX] == '[' || maze[PlayerY, PlayerX] == ']')) //checks if the player has a key and 3 coins, and if yes, sends a congrats message and ends the game.
+            {
+                Console.BackgroundColor = ConsoleColor.Black; //sets the background to black to print out a clear message
+                Console.WriteLine("");
+                Console.WriteLine("You escaped the dungeon! Congratulations!                       ");
+
+                mazeRun = 0; //stops the program
+            }
+
+            else if ((maze[PlayerY, PlayerX] == '[' || maze[PlayerY, PlayerX] == ']')) //checks if is at the door space
+            {
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.WriteLine("");
+                if (hasKey == false && money < 3)
+                {
+                    Console.WriteLine("Door is locked, and you didn't collect all the treasure!"); //tells the player they are missing the key and treasure
+                }
+                else if (hasKey == false)
+                {
+                    Console.WriteLine("Door is locked."); //player is missing key
+                }
+                else if (money < 3)
+                {
+                    Console.WriteLine("You haven't collected all the treasure!"); //player is missing treasure
+                }
+            }
+        }
+    }
+    public static void Main2(ref int mazeRun) //2nd Main I guess, runs the fight sequence
+    {
+        Console.Clear(); //clears the console to start the fight prologue sequence properly
+
+        Console.WriteLine("(You encounter an opponent in your path!)");
+        Console.WriteLine("");
+        Console.WriteLine("(What is your hero's name?)");
+        Console.WriteLine("");
+
+        string p_name = Console.ReadLine();
+
+        Console.WriteLine("");
+        Console.WriteLine("'Hello, " + p_name + "!'");
+        Console.WriteLine("");
+        Console.WriteLine("'I am Zekronix, guardian of the dungeon, and I will not let you escape!'");
+        Console.WriteLine("");
+
+        string p2_name = "Zekronix";
+
+        Console.WriteLine("'Resistance is futile. Prepare to die, weak mortal...'");
+        Console.WriteLine("");
+
+        Console.WriteLine("========== FIGHT ==========");
+        Console.WriteLine("");
+
+        Fight(p_name, p2_name, ref mazeRun); //starts fight sequence
+    }
+    public static void Fight(string p_name, string p2_name, ref int mazeRun) //fight sequence
+    {
+        int fightRun = 1; //bool for loop to run until fight is over
+
+        //both player objects: 
+
+        Player Player1 = new Player(p_name);
+        Player Player2 = new Player(p2_name);
+
+        while (fightRun == 1) //while loop for program to run :)
+
+        {
+            Console.WriteLine("======= Player Stats ======"); //displays player's stats at the beginning of the turn
+            Console.WriteLine("");
+
+            Console.WriteLine(Player1.Name + "'s HP: " + Player1.HP + " | ATK: " + Player1.ATK + " | DEF: " + Player1.DEF);
+            Console.WriteLine(Player2.Name + "'s HP: " + Player2.HP + " | ATK: " + Player2.ATK + " | DEF: " + Player2.DEF);
+            Console.WriteLine("");
+
+            string choice; //string for player 1's choice
+
+            do //do loop for it to loop until a correct input has been typed
+            {
+                Console.WriteLine("What will " + Player1.Name + " do? (Attack/Defend/Forfeit)");
+                Console.WriteLine("");
+                choice = Console.ReadLine();
+
+                if (choice.ToLower() != "attack" && choice.ToLower() != "atk" && choice.ToLower() != "defend" && choice.ToLower() != "def" && choice.ToLower() != "forfeit")
+                {
+                    Console.WriteLine("Wrong input! Please try again! (Attack, ATK, Defend, DEF or Forfeit)");
+                    Console.WriteLine("");
+                }
+
+            }
+            while (choice.ToLower() != "attack" && choice.ToLower() != "atk" && choice.ToLower() != "defend" && choice.ToLower() != "def" && choice.ToLower() != "forfeit");
+
+            //processes the valid input
+
+            if (choice.ToLower() == "attack" || choice.ToLower() == "atk")
+            {
+                Player1.Attack(Player2); //player 1's attack mechanic starts
+            }
+            else if (choice.ToLower() == "defend" || choice.ToLower() == "def")
+            {
+                Player1.Defend(Player2); //player 2's attack mechanic starts
+            }
+            else if (choice.ToLower() == "forfeit")
+            {
+                Player1.Forfeit(Player2); //forfeit mechanic for player 1
+                
+                mazeRun = 0; //stops maze
+                fightRun = 0; //stops fight
+                break; //breaks out of the loop
+            }
+
+
+            Console.WriteLine(Player2.Name + "'s HP: " + Player2.HP); //displays player 2's hp after player 1's attack
+            Console.WriteLine("");            
+
+            if (Player2.HP <= 0) //check if player 1 won
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Final HP:");
+                Console.WriteLine(Player1.Name + "'s HP: " + Player1.HP);
+                Console.WriteLine(Player2.Name + "'s HP: " + Player2.HP);
+
+                Console.WriteLine("");
+                Console.WriteLine(Player1.Name + " won the fight!");
+                Console.WriteLine("");
+                Console.WriteLine("Type 'yay' :)"); //just a little fun thing which allows the player to read that they won before going back to the maze
+                string yay = Console.ReadLine();
+
+                fightRun = 0; //stops the fight loop, taking the player back to the maze
+                break;
+            }
+
+            //zekronix's turn
+
+            Random rng2 = new Random(); //random variable to randomize whether zekronix will attack or defend, giving the player a winning chance
+            int zekChoice = rng2.Next(1, 3); //randomizes between 1 or 2
+
+
+            //string for player 2's choice
+
+            if (zekChoice == 1) //if its 1:
+            {
+                Player2.Attack(Player1); //player 2's attack mechanic starts
+            }
+            else if (zekChoice == 2) //if its 2:
+            {
+                Player2.Defend(Player1); //player 2's defend mechanic starts
+            }
+
+
+            if (Player1.HP <= 0) //check for zekronix's win
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Final HP:");
+                Console.WriteLine(Player1.Name + "'s HP: " + Player1.HP);
+                Console.WriteLine(Player2.Name + "'s HP: " + Player2.HP);
+
+                Console.WriteLine("");
+                Console.WriteLine(Player2.Name + " won the fight!");
+                mazeRun = 0; //stops the program
+                fightRun = 0; //stops the fight
+                break; //breaks the loop
+
+            }
+        }
+    }
+}
