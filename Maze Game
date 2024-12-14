@@ -1,0 +1,177 @@
+using System;
+using System.ComponentModel;
+using System.Drawing;
+
+class program
+{
+    //before you say anything, yes, I could have made functions/methods to make my code look prettier and cleaner, but it wasn't a requirement, so I didn't do it as I was scared I'd run into troubles.
+    static void Main(string[] args)
+    {
+        //2-dimensional array which displays the maze (its pretty big, I know...)
+        char[,] maze =
+            {
+             {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
+            {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', '#' },
+            {'#', ' ', ' ', ' ', '#', '#', '#', '#', ' ', '#', '#', '#', '#', ' ', '#', '#', '#', ' ', '#', ' ', '#', '#', ' ', '0', ' ', '#' },
+            {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', ' ', '#' },
+            {'#', ' ', '#', '#', '#', '#', '#', '#', '#', '#', '#', ' ', '#', '#', '#', ' ', '#', '#', '#', '#', ' ', '#', '#', '#', '#', '#' },
+            {'#', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#' },
+            {'#', ' ', '#', '#', ' ', '#', '#', '#', ' ', '#', ' ', '#', '#', ' ', '#', '#', '#', '#', ' ', '#', '#', ' ', '#', '#', ' ', '#' },
+            {'#', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', '#', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#' },
+            {'#', ' ', '#', '#', ' ', '#', '#', '#', '#', '#', '#', ' ', '#', ' ', ' ', ' ', '#', '#', '#', '#', '#', '#', ' ', '#', '#', '#' },
+            {'#', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', '#', '#', '#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#' },
+            {'#', ' ', '#', '#', '#', ' ', '#', '#', ' ', '#', ' ', '#', '#', ' ', '#', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#', '#', ' ', '#' },
+            {'#', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', '#', '#', '#', '#', '#', '#', '#', '#', '#', ' ', ' ', '#' },
+            {'#', '#', '#', '#', '#', '#', '#', ' ', '#', '#', '#', ' ', '#', ' ', '#', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', '#', '#' },
+            {'#', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', '#', ' ', ' ', '#' },
+            {'#', ' ', '#', ' ', '#', '#', '#', ' ', '#', '#', ' ', '#', '#', ' ', '#', '#', '#', '#', '#', '#', '#', ' ', '#', '#', '#', '#' },
+            {'#', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', '#', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#' },
+            {'#', '#', '#', '#', '#', ' ', '#', '#', '#', '#', ' ', '#', '#', '#', '#', ' ', '#', '#', '#', '#', '#', '#', '#', '#', ' ', '#' },
+            {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#', ' ', '#', ' ', '#', ' ', ' ', ' ', ' ', '#', ' ', '#' },
+            {'#', ' ', '#', '#', '#', ' ', '#', ' ', '#', '#', '#', ' ', '0', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', '0', ' ', '#', ' ', '#' },
+            {'#', ' ', '#', ' ', ' ', ' ', '#', '#', '#', ' ', ' ', ' ', ' ', ' ', '#', ' ', '#', ' ', '#', ' ', ' ', ' ', ' ', '#', ' ', '#' },
+            {'#', ' ', '#', ' ', '#', ' ', ' ', ' ', '#', ' ', '#', '#', '#', '#', '#', ' ', '#', ' ', '#', ' ', '#', '#', '#', '#', ' ', '#' },
+            {'#', ' ', ' ', ' ', '#', ' ', '#', '#', '#', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', '#', ' ', '#', ' ', ' ', ' ', ' ', '#' },
+            {'#', ' ', 'F', ' ', '#', ' ', '#', ' ', '#', '#', '#', ' ', '#', '#', '#', '#', '#', '#', '#', ' ', '#', ' ', '[', ']', ' ', '#' },
+            {'#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#' },
+            {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
+        };
+
+        //ints for players position on the map
+        int PlayerX = 2; //2 is where the player "X" starts
+        int PlayerY = 2;
+
+        //variables that control the inventory
+        int money = 0; //keeps track of player's money (coins)
+        bool hasKey = false; //bool to check if the player has the key (default is false)
+        string inventory = "[Nothing]";  //inventory string to display the player inventory on the screen (default is set to [Nothing]
+
+        //bool to keep track if the game should be running
+        bool run = true;
+
+        //while loop to keep the game running
+        while (run == true)
+        {
+
+            Console.SetCursorPosition(0, 0); //clears console (thanks kyle "setcursorposition fan" :D)
+
+            Console.BackgroundColor = ConsoleColor.Black; //sets the inventory's background color to black
+            Console.WriteLine("Coins: " + money); //displays the players wealth
+            Console.WriteLine("Inventory: " + inventory); //displays player inventory (can only hold 1 key, thats why its a string, no need for an array.)
+            Console.WriteLine("");
+
+            for (int y = 0; y < maze.GetLength(0); y++) //generates the Y part of the maze (also thanks to kyle for the help on this hehe)
+            {
+                for (int x = 0; x < maze.GetLength(1); x++) //generates the X part (horizontal) for each vertical line
+                {
+                    Console.BackgroundColor = ConsoleColor.DarkBlue; //sets the maze color to blue
+
+
+                    if (y == PlayerY && x == PlayerX) //player spawner
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red; //changes the player's color to red
+                        Console.Write("X "); //player is X :D
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.White; //sets the barrier colors to white before coloring the coins and key
+                        if (maze[y, x] == '0')
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkYellow; //colors the coins yellow
+                        }
+                        if (maze[y, x] == 'F')
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green; //colors the key green
+                        }
+                        Console.Write(maze[y, x] + " ");
+                    }
+                }
+
+                Console.WriteLine();
+            }
+
+            //keyboard inputs, used the same coding from the Keyboard Input assignment, just changed the ifs to check for #, and never allow the player to walk on one.
+            ConsoleKeyInfo keyInfo = Console.ReadKey();
+            switch (keyInfo.Key)
+            {
+                case ConsoleKey.RightArrow:
+                    //player goes right
+                    if (PlayerX + 1 < maze.GetLength(1) && maze[PlayerY, PlayerX + 1] != '#') //theres a +1 there to always check the space next to the player, and if its not a #, it will move.
+                    {
+                        PlayerX++; //adds 1 to PlayerX
+                    }
+                    break;
+
+                case ConsoleKey.LeftArrow:
+                    //player goes left
+                    if (PlayerX - 1 >= 0 && maze[PlayerY, PlayerX - 1] != '#') //same logic from the right movement, but the other way. Doesnt check for the maze's end, but instead the beginning (0)
+                    {
+                        PlayerX--;
+                    }
+                    break;
+                case ConsoleKey.UpArrow:
+                    //player goes up
+                    if (PlayerY - 1 >= 0 && maze[PlayerY - 1, PlayerX] != '#')
+                    {
+                        PlayerY--;
+                    }
+                    break;
+                case ConsoleKey.DownArrow:
+                    //player goes down
+                    if (PlayerY + 1 < maze.GetLength(0) && maze[PlayerY + 1, PlayerX] != '#')
+                    {
+                        PlayerY++;
+                    }
+                    break;
+
+
+            }
+            if (maze[PlayerY, PlayerX] == 'F') //key funcionality:
+            {
+                inventory = "Key       "; //adds the key to the inventory string and displays it visually. 
+                hasKey = true; //sets the hasKey bool to true to check for win
+                maze[PlayerY, PlayerX] = ' '; //deletes the key after the player picked it up
+            }
+
+            if (maze[PlayerY, PlayerX] == '0') //coin funcionality:
+            {
+                money++; //adds 1 to the money when a coin is picked up
+                maze[PlayerY, PlayerX] = ' '; //deletes the coin after player picks it up
+            }
+
+            //win checking
+            if (money >= 3 && hasKey == true && (maze[PlayerY, PlayerX] == '[' || maze[PlayerY, PlayerX] == ']')) //checks if the player has a key and 3 coins, and if yes, sends a congrats message and ends the game.
+            {
+                Console.BackgroundColor = ConsoleColor.Black; //sets the background to black to print out a clear message
+                Console.WriteLine("");
+                Console.WriteLine("You escaped the dungeon! Congratulations!                       ");
+
+                run = false; //stops the program
+            }
+
+            else if ((maze[PlayerY, PlayerX] == '[' || maze[PlayerY, PlayerX] == ']')) //checks if is at the door space
+            {
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.WriteLine("");
+                if (hasKey == false && money < 3)
+                {
+                    Console.WriteLine("Door is locked, and you didn't collect all the treasure!");
+                }
+                else if (hasKey == false)
+                {
+                    Console.WriteLine("Door is locked.");
+                }
+                else if (money < 3)
+                {
+                    Console.WriteLine("You haven't collected all the treasure!");
+                }
+            }
+            
+
+            //the code ends, and the console is 'cleared' at the top via the setcursorposition function
+
+        }
+
+    }
+
+}
